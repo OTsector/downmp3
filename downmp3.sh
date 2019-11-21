@@ -34,7 +34,8 @@ if ! [ -f /usr/bin/curl ]; then
 	else
 		echo "ERROR: can't process without curl"; exit 1
 	fi
-elif ! [ -f /usr/local/bin/youtube-dl ]; then
+fi
+if ! [ -f /usr/local/bin/youtube-dl ]; then
 	echo "ERROR: youtube-dl is not installed on this machine"
 	printf "do you whant to install youtube-dl? "; read a
 	if [[ $a == "y" ]] || [[ $a == "Y" ]]; then
