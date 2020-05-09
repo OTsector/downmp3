@@ -76,7 +76,7 @@ function download {
 	done
 }
 function preDownload {
-	echo -e "INFO: downloading \"$new\" &"
+	echo -e "INFO: downloading \"$new\""
 	while true; do
 		downmp3 "$new" $path &> /dev/null \
 		&& break || sleep 5s
