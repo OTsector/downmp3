@@ -50,6 +50,19 @@ if ! [ -f /usr/local/bin/youtube-dl ]; then
 
 fi
 
+function ascii2url {
+	local text="$*"
+	local out=
+	for((i=0; i<${#text}; i++)); do
+		c=${text:$i:1}
+		case $c in
+			[a-zA-Z0-9.~_-]) out+="$c" ;;
+			*) out+=`printf '%%%02X' "'$c"` ;;
+		esac
+	done
+	echo $out
+}
+
 name=$1
 dir=$2
 
@@ -57,7 +70,7 @@ if ! [ -d $dir ]; then
 	echo "ERROR: directory \""$dir"\" isn't exsist"; exit 1
 fi
 
-urlName=${name// /+}
+urlName=`ascii2url $name`
 link="https://www.youtube.com/watch?v="$(
 	curl -sLgk 'https://www.youtube.com/results?search_query='"$urlName" \
 		-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
@@ -65,9 +78,10 @@ link="https://www.youtube.com/watch?v="$(
 		-H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' \
 		-H 'Upgrade-Insecure-Requests: 1' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'TE: Trailers' \
 			|tr -d "\n"|sed 's/,"commandMetadata":{"webCommandMetadata":{"url":"/\n,"commandMetadata":{"webCommandMetadata":{"url":"/g' \
-			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"'|sed "1q;d" \
+			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"'|sed "2q;d" \
 			|sed 's/"videoIds":\["/\n"videoIds":\["/g'|grep '"videoIds":\["'|awk -F '"' '{print $4}'|head -n 1
 )
+echo $link
 if [[ ${link#*\?} != "" ]]; then
 	youtube-dl --extract-audio --audio-format mp3 $link -o $dir"/$name.%(ext)s" \
 		&> /dev/null
@@ -81,4 +95,3 @@ else
 fi
 
 exit 0
-
