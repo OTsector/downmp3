@@ -59,13 +59,13 @@ fi
 
 urlName=${name// /+}
 link="https://www.youtube.com/watch?v="$(
-	curl -sLgk 'https://www.youtube.com/results?search_query=eminem+venom' \
+	curl -sLgk 'https://www.youtube.com/results?search_query='"$urlName" \
 		-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
 		-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
 		-H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' \
 		-H 'Upgrade-Insecure-Requests: 1' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'TE: Trailers' \
 			|tr -d "\n"|sed 's/,"commandMetadata":{"webCommandMetadata":{"url":"/\n,"commandMetadata":{"webCommandMetadata":{"url":"/g' \
-			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"'|head -n 1 \
+			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"'|sed "1q;d" \
 			|sed 's/"videoIds":\["/\n"videoIds":\["/g'|grep '"videoIds":\["'|awk -F '"' '{print $4}'|head -n 1
 )
 if [[ ${link#*\?} != "" ]]; then
