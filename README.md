@@ -7,9 +7,7 @@
 	example: /usr/bin/downmp3 "YTcracker - Antisec" ~/Desktop
 	root@PC:~#
 ## how to install:
-	sudo wget https://raw.githubusercontent.com/OTsector/downmp3/master/downmp3.sh -O /usr/bin/downmp3
-	sudo chmod +x /usr/bin/downmp3
-	sudo wget https://raw.githubusercontent.com/OTsector/downmp3/master/playsong.sh -O /usr/bin/playsong
-	sudo chmod +x /usr/bin/playsong
+	sudo apt-get install curl -y
+	curl -sLgkA '' 'https://raw.githubusercontent.com/OTsector/downmp3/master/configure.sh'|sudo bash
 ## One line command:
-	sudo wget https://raw.githubusercontent.com/OTsector/downmp3/master/downmp3.sh -O /usr/bin/downmp3 && sudo chmod +x /usr/bin/downmp3 ; sudo wget https://raw.githubusercontent.com/OTsector/downmp3/master/playsong.sh -O /usr/bin/playsong && sudo chmod +x /usr/bin/playsong
+	sudo apt-get install curl -y && curl -sLgkA '' 'https://raw.githubusercontent.com/OTsector/downmp3/master/configure.sh'|sudo bash
