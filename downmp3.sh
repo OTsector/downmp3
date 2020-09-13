@@ -78,9 +78,7 @@ link="https://www.youtube.com/watch?v="$(
 		-H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' \
 		-H 'Upgrade-Insecure-Requests: 1' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'TE: Trailers' \
 			|tr -d "\n"|sed 's/,"commandMetadata":{"webCommandMetadata":{"url":"/\n,"commandMetadata":{"webCommandMetadata":{"url":"/g' \
-			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"'|sed "2q;d" \
-			|sed 's/"videoIds":\["/\n"videoIds":\["/g'|grep '"videoIds":\["'|awk -F '"' '{print $4}'|head -n 1
-)
+			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"'|sed 's/"videoIds":\["/\n"videoIds":\["/g'|grep '"videoIds"'|awk -F '"' '{print $4}'|head -n 1)
 echo $link
 if [[ ${link#*\?} != "" ]]; then
 	youtube-dl --extract-audio --audio-format mp3 $link -o $dir"/$name.%(ext)s" \
@@ -95,3 +93,4 @@ else
 fi
 
 exit 0
+
