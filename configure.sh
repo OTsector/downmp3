@@ -17,7 +17,9 @@ if ! [ -f /usr/local/bin/youtube-dl ]; then
 	chmod a+rx /usr/local/bin/youtube-dl
 fi
 if ! [ -f /usr/bin/downmp3 ]; then
-			( wget https://raw.githubusercontent.com/OTsector/downmp3/master/downmp3.sh \
-				-O /usr/bin/downmp3 \
-					&& chmod +x /usr/bin/downmp3
+	wget https://raw.githubusercontent.com/OTsector/downmp3/master/downmp3.sh \
+		-O /usr/bin/downmp3 \
+			&& chmod +x /usr/bin/downmp3
 fi
+
+[ $? -eq 0 ] && { echo "INFO: well done!"; }
