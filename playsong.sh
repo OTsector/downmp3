@@ -6,49 +6,6 @@
 #
 # license: GLP v3.0
 
-if ! [ -f /usr/bin/wget ]; then
-	echo "ERROR: wget is not installed on this machine"
-	printf "do you whant to install it? "; read a
-	if [[ $a == "y" ]] || [[ $a == "Y" ]]; then
-		if [ $UID -eq 0 ]; then
-			apt-get install wget -y &> /dev/null
-		else
-			echo "ERROR: run this tool with root permission"
-		fi
-	else
-		echo "ERROR: can't process without wget"; exit 1
-	fi
-fi
-if ! [ -f /usr/bin/downmp3 ]; then
-	echo "ERROR: downmp3 is not installed on this machine"
-	printf "do you whant to install it? "; read a
-	if [[ $a == "y" ]] || [[ $a == "Y" ]]; then
-		if [ $UID -eq 0 ]; then
-			( wget https://raw.githubusercontent.com/OTsector/downmp3/master/downmp3.sh \
-				-O /usr/bin/downmp3 \
-					&& chmod +x /usr/bin/downmp3 ) &> /dev/null
-		else
-			echo "ERROR: run this tool with root permission"
-		fi
-	else
-		echo "ERROR: can't process without downmp3"; exit 1
-	fi
-fi
-if ! [ -f /usr/bin/ffplay ]; then
-	echo "ERROR: ffmpeg is not installed on this machine"
-	printf "do you whant to install it? "; read a
-	if [[ $a == "y" ]] || [[ $a == "Y" ]]; then
-		if [ $UID -eq 0 ]; then
-			sudo apt-get install ffmpeg -y &> /dev/null
-		else
-			echo "ERROR: run this tool with root permission"
-		fi
-	else
-		echo "ERROR: can't process without ffmpeg"; exit 1
-	fi
-
-fi
-
 ram="$(mktemp -p /dev/shm/)"
 log=$HOME"/."$(sed 's/.*\///g' <<< $0)".log"
 title="$1"
@@ -102,4 +59,3 @@ for((i=1; i<=$lastLine; i++)); do
 done
 
 exit 0
-
