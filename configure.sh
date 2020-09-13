@@ -6,7 +6,7 @@ if [ $UID -ne 0 ]; then
 fi
 
 if ! [ -f /usr/bin/wget ]; then
-			apt-get install wget -y &> /dev/null
+	apt-get install wget -y &> /dev/null
 fi
 if ! [ -f /usr/bin/ffplay ]; then
 	apt-get install ffmpeg -y &> /dev/null
