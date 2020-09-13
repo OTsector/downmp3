@@ -1,12 +1,6 @@
 #!/bin/bash
-#        _
-#  07   [|] 0ffensive 7ester
-#
-# 	0 |) 1 |\|    https://github.com/OdinF13
-#
-# license: GLP v3.0
 
-if [ $UID -eq 0 ]; then
+if [ $UID -ne 0 ]; then
 	echo "ERROR: need to run as root"
 	exit 1
 fi
