@@ -7,7 +7,8 @@
 	example: /usr/bin/downmp3 "YTcracker - Antisec" ~/Desktop
 	root@PC:~#
 ## how to install:
+	sudo apt-get update
 	sudo apt-get install curl -y
 	curl -sLgkA '' 'https://raw.githubusercontent.com/OTsector/downmp3/master/configure.sh'|sudo bash
 ## One line command:
-	sudo apt-get install curl -y && curl -sLgkA '' 'https://raw.githubusercontent.com/OTsector/downmp3/master/configure.sh'|sudo bash
+	sudo apt-get update && sudo apt-get install curl -y && curl -sLgkA '' 'https://raw.githubusercontent.com/OTsector/downmp3/master/configure.sh'|sudo bash
