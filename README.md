@@ -5,7 +5,11 @@
 
 	use: /usr/bin/downmp3 [name of song] [directory location]
 	example: /usr/bin/downmp3 "YTcracker - Antisec" ~/Desktop
-	root@PC:~#
+	root@PC:~# playsong 
+	use: /usr/bin/playsong [song name/song list/stdin]
+	root@PC:~# playsong "YTcracker - Antisec"
+	INFO: downloading "YTcracker - Antisec"
+	INFO: playing "YTcracker - Antisec"
 ## how to install:
 	sudo apt-get update
 	sudo apt-get install curl -y
