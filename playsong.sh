@@ -14,7 +14,7 @@ rm -rf $path; mkdir -p $path
 
 if [ -t 0 ]; then
 	if [ $# -ge 0 ] && [ ${#1} -lt 5 ]; then
-		echo "use "$0" [song name/song list/stdin]"; exit 1
+		echo "use: "$0" [song name/song list/stdin]"; exit 1
 	fi
 	while [ "$#" -gt 0 ]; do
 		echo $1 >> $ram; shift 1;
