@@ -17,9 +17,11 @@ function ascii2url {
 	echo $out
 }
 
+if [ $# -lt 2 ]; then
+	echo "use: "$0" [name of song] [directory]"; exit 1
+fi
 name=$1
 dir=$2
-
 if ! [ -d $dir ]; then
 	echo "ERROR: directory \""$dir"\" isn't exsist"; exit 1
 fi
@@ -31,12 +33,14 @@ link="https://www.youtube.com/watch?v="$(
 		-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
 		-H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' \
 		-H 'Upgrade-Insecure-Requests: 1' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'TE: Trailers' \
-			|tr -d "\n"|sed 's/,"commandMetadata":{"webCommandMetadata":{"url":"/\n,"commandMetadata":{"webCommandMetadata":{"url":"/g' \
-			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"'|sed 's/"videoIds":\["/\n"videoIds":\["/g'|grep '"videoIds"'|awk -F '"' '{print $4}'|head -n 1)
-echo $link
+			|tr -d "\n" \
+			|sed 's/,"commandMetadata":{"webCommandMetadata":{"url":"/\n,"commandMetadata":{"webCommandMetadata":{"url":"/g' \
+			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"' \
+			|sed 's/"videoIds":\["/\n"videoIds":\["/g'|grep '"videoIds"'|awk -F '"' '{print $4}'|head -n 1
+)
 if [[ ${link#*\?} != "" ]]; then
-	youtube-dl --extract-audio --audio-format mp3 $link -o $dir"/$name.%(ext)s" \
-		&> /dev/null
+	youtube-dl --extract-audio --audio-format mp3 $link -o $dir"/$name.%(ext)s"# \
+#		&> /dev/null
 	if [ $? -eq 0 ];then
 		echo "\"$name"\" file downloaded in directory \"$dir"\""
 	else

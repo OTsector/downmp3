@@ -37,6 +37,7 @@ function preDownload {
 	while true; do
 		downmp3 "$new" $path &> /dev/null \
 		&& break || sleep 5s
+
 	done
 	echo -e "INFO: download finished for \"$new\""
 }
