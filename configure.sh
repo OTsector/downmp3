@@ -5,6 +5,9 @@ if [ $UID -ne 0 ]; then
 	exit 1
 fi
 
+if ! [ -f /usr/bin/python ]; then
+	apt-get install python -y &> /dev/null
+fi
 if ! [ -f /usr/bin/wget ]; then
 	apt-get install wget -y &> /dev/null
 fi
