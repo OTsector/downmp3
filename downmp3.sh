@@ -26,7 +26,8 @@ if ! [ -d $dir ]; then
 	echo "ERROR: directory \""$dir"\" isn't exsist"; exit 1
 fi
 
-urlName=`ascii2url $name`
+urlName=`xxd -i <<< "$name"|tr -d "\n "|tr "[a-z]" "[A-Z]" \
+	|sed 's/0X//g;s/,/%/g'`
 link="https://www.youtube.com/watch?v="$(
 	curl -sLgk 'https://www.youtube.com/results?search_query='"$urlName" \
 		-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
@@ -39,8 +40,8 @@ link="https://www.youtube.com/watch?v="$(
 			|sed 's/"videoIds":\["/\n"videoIds":\["/g'|grep '"videoIds"'|awk -F '"' '{print $4}'|head -n 1
 )
 if [[ ${link#*\?} != "" ]]; then
-	youtube-dl --extract-audio --audio-format mp3 $link -o $dir"/$name.%(ext)s"# \
-#		&> /dev/null
+	youtube-dl --extract-audio --audio-format mp3 $link -o $dir"/$name.%(ext)s" \
+		&> /dev/null
 	if [ $? -eq 0 ];then
 		echo "\"$name"\" file downloaded in directory \"$dir"\""
 	else
