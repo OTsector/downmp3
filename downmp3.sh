@@ -4,19 +4,6 @@
 #
 # GLP v3.0 by -07: https://github.com/OTsector
 
-function ascii2url {
-	local text="$*"
-	local out=
-	for((i=0; i<${#text}; i++)); do
-		c=${text:$i:1}
-		case $c in
-			[a-zA-Z0-9.~_-]) out+="$c" ;;
-			*) out+=`printf '%%%02X' "'$c"` ;;
-		esac
-	done
-	echo $out
-}
-
 if [ $# -lt 2 ]; then
 	echo "use: "$0" [name of song] [directory]"; exit 1
 fi
