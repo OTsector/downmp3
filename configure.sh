@@ -19,15 +19,11 @@ if ! [ -f /usr/local/bin/youtube-dl ]; then
 		-o /usr/local/bin/youtube-dl && echo "youtube-dl has been installed"
 	chmod a+rx /usr/local/bin/youtube-dl
 fi
-if ! [ -f /usr/bin/downmp3 ]; then
-	wget https://raw.githubusercontent.com/OTsector/downmp3/master/downmp3.sh \
-		-O /usr/bin/downmp3 \
-			&& chmod +x /usr/bin/downmp3
-fi
-if ! [ -f /usr/bin/playsong ]; then
-	wget https://raw.githubusercontent.com/OTsector/downmp3/master/playsong.sh \
+wget https://raw.githubusercontent.com/OTsector/downmp3/master/downmp3.sh \
+	-O /usr/bin/downmp3 \
+		&& chmod +x /usr/bin/downmp3 \
+	&& wget https://raw.githubusercontent.com/OTsector/downmp3/master/playsong.sh \
 		-O /usr/bin/playsong \
 			&& chmod +x /usr/bin/playsong
-fi
 
 [ $? -eq 0 ] && { echo "INFO: well done!"; }
