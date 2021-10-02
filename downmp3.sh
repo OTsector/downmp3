@@ -36,6 +36,6 @@ if [[ ${link#*\?} != "" ]]; then
 	fi
 else
 	echo "ERROR: connection problem"; exit 1
-fi--audio-quality 0
+fi
 
 exit 0
