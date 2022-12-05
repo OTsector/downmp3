@@ -13,18 +13,16 @@ if ! [ -d $dir ]; then
 	echo "ERROR: directory \""$dir"\" isn't exsist"; exit 1
 fi
 
-urlName=`xxd -i <<< "$name"|tr -d "\n "|tr "[a-z]" "[A-Z]" \
-	|sed 's/0X//g;s/,/%/g'`
+urlName="%"`xxd -i <<< "$name"|tr -d "\n "|tr "[a-z]" "[A-Z]" \
+	|sed 's/0X//g;s/,/%/g'|rev|cut -c 4-|rev`
 link="https://www.youtube.com/watch?v="$(
 	curl -sLgk 'https://www.youtube.com/results?search_query='"$urlName" \
 		-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
 		-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
 		-H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' \
 		-H 'Upgrade-Insecure-Requests: 1' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' \
-			|tr -d "\n"  \
-			|sed 's/,"commandMetadata":{"webCommandMetadata":{"url":"/\n,"commandMetadata":{"webCommandMetadata":{"url":"/g' \
-			|grep ',"commandMetadata":{"webCommandMetadata":{"url":"'|grep 'title":{"runs":\[{"text":"' \
-			|sed 's/"videoIds":\["/\n&/g'|grep '"videoIds"'|awk -F '"' '{print $4}'|head -n 1
+			|tr -d "\n"|sed 's/{"videoRenderer":{"videoId":"/\n&/g'|grep '{"videoRenderer":{"videoId":"' \
+			|awk -F '"' '{print $6}'|head -n 1
 )
 if [[ ${link#*\?} != "" ]]; then
 	yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 "$link" -o $dir"/$name.%(ext)s" \
