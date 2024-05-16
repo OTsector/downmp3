@@ -25,7 +25,7 @@ link="https://www.youtube.com/watch?v="$(
 			|awk -F '"' '{print $6}'|head -n 1
 )
 if [[ ${link#*\?} != "" ]]; then
-	yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 "$link" -o $dir"/$(sed 's/\// /g' <<< "$name").%(ext)s" \
+	yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 "$link" -o $dir"/$(sed 's/[\\/:*?\"|]//g;s/</(/g;s/>/)/g;s/\// /g;s/\\/ /g;s/\ \ \ /\ /g;s/\ \ /\ /g' <<< "$name").%(ext)s" \
 		&> /dev/null
 	if [ $? -eq 0 ];then
 		echo "\"$name"\" file downloaded in directory \"$dir"\""
